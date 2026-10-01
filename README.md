@@ -1,4 +1,6 @@
-# Compat Completion dataset
+# Compat Completion: Browser Support Table with Hidden Cells (18,517 anonymised web-platform features)
+
+**Platform upload:** `compat_completion_dataset.zip` in this repository is the exact file registered on the challenge platform (9 CSV files, flat; sha256 `0292a73ef384f2e49f7358d706a9fbdf8726bbfb9c0a26b1a7556023b34b7daa`). The same nine CSVs are also checked in individually at the repository root, with per-file checksums in `SHA256SUMS`.
 
 Browser support table of the web platform with hidden cells — 18,517 anonymised features × 13 browsers, seven reveal regimes, a private answer key. Released under CC0 1.0 (LICENSE). This repository is the canonical public home of the dataset; file checksums are in `SHA256SUMS`.
 
