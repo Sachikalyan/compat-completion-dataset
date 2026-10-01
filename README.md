@@ -1,6 +1,6 @@
 # Compat Completion: Browser Support Table with Hidden Cells (18,517 anonymised web-platform features)
 
-**Platform upload:** `compat_completion_dataset.zip` in this repository is the exact file registered on the challenge platform (9 CSV files, flat; sha256 `0292a73ef384f2e49f7358d706a9fbdf8726bbfb9c0a26b1a7556023b34b7daa`). The same nine CSVs are also checked in individually at the repository root, with per-file checksums in `SHA256SUMS`.
+**Platform upload:** `compat_completion_dataset.zip` in this repository is the exact file registered on the challenge platform (9 CSV files, flat; sha256 `707dadb5236fd762846c609ddb83510f9b22d2696e44f3708d27bf4ea0f00de4`). The same nine CSVs are also checked in individually at the repository root, with per-file checksums in `SHA256SUMS`.
 
 Browser support table of the web platform with hidden cells — 18,517 anonymised features × 13 browsers, seven reveal regimes, a private answer key. Released under CC0 1.0 (LICENSE). This repository is the canonical public home of the dataset; file checksums are in `SHA256SUMS`.
 
@@ -39,7 +39,8 @@ All 9 files are flat CSVs with a header row and **no missing values**; feature t
 | `browser` | string | one of chrome, chrome_android, edge, firefox, firefox_android, oculus, opera, opera_android, safari, safari_ios, samsunginternet_android, webview_android, webview_ios |
 | `version` | string | release version label, e.g. `57`, `13.1`, `9.4` |
 | `release_date` | string (YYYY-MM-DD) | release date |
-| `engine`, `engine_version` | string | rendering engine and its version (`unknown` where the source has none) |
+| `engine` | string | rendering engine: Blink, WebKit, Gecko, EdgeHTML, Presto, unknown |
+| `engine_version` | string | engine and its version as one label, e.g. `Blink 81`, `WebKit 605.1.15` (`unknown` where the source has none) — for Blink derivatives this is the Chromium version |
 | `status` | string | `retired`, `current`, `beta`, `nightly`, `planned`, `esr` |
 | `upstream` | string | the browser this one derives from, or `none` |
 | `type` | string | `desktop`, `mobile`, `xr` |

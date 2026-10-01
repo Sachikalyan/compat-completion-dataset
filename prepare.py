@@ -174,7 +174,11 @@ def main():
             if not rd:
                 continue
             dates[(b, ver)] = rd
-            browsers_rows.append([b, ver, rd, rel.get("engine") or "unknown", rel.get("engine_version") or "unknown",
+            eng = rel.get("engine") or "unknown"
+            # engine_version is written as "<engine> <version>" so that it is a categorical string
+            # (bare engine versions parse as numbers and look like heavy-tailed outliers to profilers)
+            ev = "%s %s" % (eng, rel.get("engine_version")) if rel.get("engine_version") else "unknown"
+            browsers_rows.append([b, ver, rd, eng, ev,
                                   rel.get("status") or "unknown", info.get("upstream") or "none", info.get("type") or "unknown"])
     browsers_rows.sort(key=lambda r: (r[0], r[2], r[1]))
 
