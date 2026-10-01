@@ -14,6 +14,6 @@
 2. Target normalisation per (feature, browser): first support entry; `false`/absent/`preview`/flagged → `false`; version-unknown (`true`) or undated versions → cell dropped; `≤N` → `N`. Features with fewer than six usable cells dropped (20,647 → 18,517).
 3. Anonymisation: feature names and paths removed; ids assigned by seeded shuffle; hierarchy (`parent_id`), depth, category and status flags kept.
 4. Split: `mathml` and `webassembly` entirely test; 20 % of level-3 subtrees test (2,212 of 11,058); 14,394 train / 4,123 test features.
-5. Reveal regimes: derivative1, source1, random2, lineage_pair, engine_webkit (train, labelled, and test) and engine_blink, subtree_engine (test only); hidden cells removed from `test_support.csv` and recorded as `target` in `answers.csv`, keyed by `id`.
+5. Reveal regimes: derivative1, source1, random2, lineage_pair, engine_webkit (train, labelled, and test) and engine_blink, subtree_engine (test only); hidden cells removed from `test_support.csv` and recorded as `target` in `answers.csv`, keyed by `id`, with regime/hard/unseen-category/date in one `meta` column.
 
 No personal data are contained in the derived files.

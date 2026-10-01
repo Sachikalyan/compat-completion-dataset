@@ -16,8 +16,8 @@ Outputs (all CSVs are blank-free; flags are yes/no strings; ids are order-free):
     public/test_features.csv      feature_id, parent_id, category, depth, experimental, standard_track, deprecated
     public/test_support.csv       feature_id, browser, version_added          (visible cells only)
     public/test_queries.csv       id, feature_id, browser                     (hidden cells to predict)
-    public/sample_submission.csv  id, prediction, certain
-    private/answers.csv           id, target, feature_id, browser, regime, hard, unseen_category, target_date
+    public/sample_submission.csv  id, target, certain
+    private/answers.csv           id, target, feature_id, browser, meta   (meta = regime=..;hard=..;unseen_category=..;target_date=..)
     private/feature_manifest.csv  feature_id -> real BCD path (reviewer only)
     private/prepare_report.json
 """
@@ -322,9 +322,10 @@ def main():
     answers = []
     for (p, b) in queries:
         t = cells[p][b]
-        answers.append([qid[(p, b)], t, fid[p], b, test_regime[p], "yes" if test_regime[p] in HARD_REGIMES else "no",
-                        "yes" if p.split(".")[0] in UNSEEN_CATEGORIES else "no",
-                        dates[(b, t)] if t != "false" else "none"])
+        meta_s = "regime=%s;hard=%s;unseen_category=%s;target_date=%s" % (
+            test_regime[p], "yes" if test_regime[p] in HARD_REGIMES else "no",
+            "yes" if p.split(".")[0] in UNSEEN_CATEGORIES else "no", dates[(b, t)] if t != "false" else "none")
+        answers.append([qid[(p, b)], t, fid[p], b, meta_s])
     answers.sort()
 
     # ---- write
@@ -342,8 +343,8 @@ def main():
     w(os.path.join(P, "test_features.csv"), fh, test_features)
     w(os.path.join(P, "test_support.csv"), ["feature_id", "browser", "version_added"], test_support)
     w(os.path.join(P, "test_queries.csv"), ["id", "feature_id", "browser"], test_queries)
-    w(os.path.join(P, "sample_submission.csv"), ["id", "prediction", "certain"], sample)
-    w(os.path.join(Q, "answers.csv"), ["id", "target", "feature_id", "browser", "regime", "hard", "unseen_category", "target_date"], answers)
+    w(os.path.join(P, "sample_submission.csv"), ["id", "target", "certain"], sample)
+    w(os.path.join(Q, "answers.csv"), ["id", "target", "feature_id", "browser", "meta"], answers)
     w(os.path.join(Q, "feature_manifest.csv"), ["feature_id", "path", "split", "regime"],
       sorted([[fid[p], p, "train" if p in train_regime else "test", train_regime.get(p, test_regime.get(p, ""))] for p in paths]))
     from collections import Counter
@@ -353,7 +354,7 @@ def main():
         "n_train_cells": len(train_support), "n_test_visible_cells": len(test_support), "n_queries": len(queries),
         "regime_counts_test": dict(Counter(test_regime[p] for p in test_paths)),
         "regime_counts_train": dict(Counter(train_regime.values())),
-        "query_regime_counts": dict(Counter(a[4] for a in answers)),
+        "query_regime_counts": dict(Counter(a[4].split(";")[0].split("=")[1] for a in answers)),
         "target_false_share": sum(1 for a in answers if a[1] == "false") / len(answers),
         "unseen_categories": sorted(UNSEEN_CATEGORIES), "n_test_l3_subtrees": len(test_l3),
         "browsers": BROWSERS, "n_release_rows": len(browsers_rows),

@@ -1,6 +1,6 @@
 # Compat Completion: Browser Support Table with Hidden Cells (18,517 anonymised web-platform features)
 
-**Platform upload:** `compat_completion_dataset.zip` in this repository is the exact file registered on the challenge platform (9 CSV files, flat; sha256 `707dadb5236fd762846c609ddb83510f9b22d2696e44f3708d27bf4ea0f00de4`). The same nine CSVs are also checked in individually at the repository root, with per-file checksums in `SHA256SUMS`.
+**Platform upload:** `compat_completion_dataset.zip` in this repository is the exact file registered on the challenge platform (9 CSV files, flat; sha256 `1a3eb15866b113eece415ce9eb1747818bc0262c4109e894377a89daf36b8041`). The same nine CSVs are also checked in individually at the repository root, with per-file checksums in `SHA256SUMS`.
 
 Browser support table of the web platform with hidden cells — 18,517 anonymised features × 13 browsers, seven reveal regimes, a private answer key. Released under CC0 1.0 (LICENSE). This repository is the canonical public home of the dataset; file checksums are in `SHA256SUMS`.
 
@@ -71,7 +71,7 @@ All 9 files are flat CSVs with a header row and **no missing values**; feature t
 | Column | Type | Description |
 |--------|------|-------------|
 | `id` | string | one row per query |
-| `prediction` | string | a release version of the query's browser, or `false` (sample: `false`) |
+| `target` | string | the predicted `version_added`: a release version of the query's browser, or `false` (sample: `false`) |
 | `certain` | int {0,1} | commitment flag (sample: 0) |
 
 ### `answers.csv` (private)
@@ -80,9 +80,7 @@ All 9 files are flat CSVs with a header row and **no missing values**; feature t
 | `id` | string | query identifier |
 | `target` | string | the true `version_added`: a release version or `false` |
 | `feature_id`, `browser` | string | the hidden cell |
-| `regime` | string | one of the seven regimes (incl. test-only engine_blink, subtree_engine) |
-| `hard`, `unseen_category` | string {yes, no} | test-only regime / category absent from training |
-| `target_date` | string | release date of the target version, or `none` |
+| `meta` | string | `regime=…;hard=…;unseen_category=…;target_date=…` — the reveal regime (one of seven, incl. test-only engine_blink and subtree_engine), whether it is a test-only regime, whether the category is absent from training, and the release date of the target version (`none` for `false`) |
 
 ## Characteristics
 - 15.6 % of hidden cells are `false`; the rest are versions spanning 2008–2026.
